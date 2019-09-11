@@ -1,44 +1,43 @@
 ﻿using System;
-using LightInject;
+using Microsoft.Extensions.DependencyInjection;
 
-using IR.Core;
+using WorkflowCore.Interface;
+
+using IR.Core.Workflow;
 
 namespace IR.CLI
 {
     class Program
     {
-        private static ServiceContainer Container;
-        private static IService Srvc;
-
         static void Main(string[] args)
         {
-            RegisterServices();
-            Srvc = Container.GetInstance<IService>();
+            IServiceProvider serviceProvider = ConfigureServices();
 
-            Console.WriteLine(Srvc.Authorize());
+            // start the workflow host
+            var host = serviceProvider.GetService<IWorkflowHost>();
+            host.RegisterWorkflow<AuthorizeFlow>();        
+            host.Start();        
 
-            DisposeServices();
+            host.StartWorkflow("Authorize");
+            
+            Console.ReadLine();
+            host.Stop();
         }
 
-        private static void RegisterServices()
+        private static IServiceProvider ConfigureServices()
         {
-            Container = new ServiceContainer();
-            Container.Register<IService, Service>();
-        }
+            // setup dependency injection
+            IServiceCollection services = new ServiceCollection();
+            // services.AddLogging();
+            // services.AddWorkflow();
+            // services.AddTransient<GoodbyeWorld>();
+            
+            var serviceProvider = services.BuildServiceProvider();
 
-        private static void DisposeServices()
-        {
-            if (Srvc is IDisposable disp)
-            {
-                disp.Dispose();
-                Srvc = null;
-            }
-
-            if (Container != null)
-            {
-                Container.Dispose();
-                Container = null;
-            }
+            // config logging
+            // var loggerFactory = serviceProvider.GetService<ILoggerFactory>();            
+            // loggerFactory.AddDebug();
+            return serviceProvider;
         }
     }
 }
