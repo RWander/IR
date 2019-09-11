@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IR.Console
+namespace IR.CLI
 {
     class Program
     {
