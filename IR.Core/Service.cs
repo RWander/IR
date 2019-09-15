@@ -3,7 +3,7 @@ using WorkflowCore.Interface;
 namespace IR.Core
 {
     [System.Obsolete]
-    public interface IService
+    public interface IService // TODO: remove?
     {
         string Authorize();
         void GetOrders();
