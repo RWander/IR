@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 using WorkflowCore.Interface;
 
@@ -28,15 +29,15 @@ namespace IR.CLI
         {
             // setup dependency injection
             IServiceCollection services = new ServiceCollection();
-            // services.AddLogging();
-            // services.AddWorkflow();
+            services.AddLogging();
+            services.AddWorkflow();
             // services.AddTransient<GoodbyeWorld>();
             
             var serviceProvider = services.BuildServiceProvider();
 
             // config logging
-            // var loggerFactory = serviceProvider.GetService<ILoggerFactory>();            
-            // loggerFactory.AddDebug();
+            var loggerFactory = serviceProvider.GetService<ILoggerFactory>();            
+            loggerFactory.AddDebug();
             return serviceProvider;
         }
     }
