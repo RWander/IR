@@ -1,31 +1,12 @@
 using System;
 using RestSharp;
 
-namespace IR.Core
+namespace IR.Core.Common
 {
     internal sealed class ApiProxy // TODO: singleton?, IDisposable
     {
         private readonly string _token; // TODO: sandbox and regular token (see git-ignored .token file) 
         private readonly IRestClient _client;
-
-        // static TinkoffProxy Instance // TODO: inject logger
-        // {
-        //     get
-        //     {
-        //         if (_proxy == null)
-        //         {
-        //             _proxy = new TinkoffProxy();
-        //         }
-        //         return _proxy;
-        //     }
-        // }
-        // private static TinkoffProxy _proxy;
-
-        // static TinkoffProxy()
-        // {
-        //     BaseUrl = "https://api-invest.tinkoff.ru/openapi/sandbox/sandbox/"; // TODO: sandbox and regular url 
-        //     Token = "t.WZNjm46Dn4FPBbWV_bUgJS5C1r9c7yHNTr7KxDpNm30OoOMYLt8d-2bUjcGYFjimltTEikn4gday5aZBH-lF0Q"; // TODO: sandbox and regular token (see git-ignored .token file) 
-        // }
 
         public ApiProxy(IConfigurationFactory configFactory) 
         {

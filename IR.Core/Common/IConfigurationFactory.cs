@@ -4,10 +4,13 @@ using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 
-using IR.Core;
-
-namespace IR.CLI.Common
+namespace IR.Core.Common
 {
+    public interface IConfigurationFactory
+    {
+        IConfiguration Configuration { get; }
+    } 
+
     internal sealed class ConfigurationFactory: IConfigurationFactory
     {
         // /// <summary>

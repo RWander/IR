@@ -5,8 +5,12 @@ using WorkflowCore.Models;
 
 namespace IR.Core.Step
 {
-    internal sealed class GetOrders : StepBody
+    internal sealed class GetOrders : ApiStep
     {
+        // public GetOrders(ApiProxy proxy) : base(proxy)
+        // {
+        // }
+
         public override ExecutionResult Run(IStepExecutionContext context)
         {
             // ..

@@ -5,8 +5,7 @@ using Microsoft.Extensions.Logging;
 using WorkflowCore.Interface;
 
 using IR.Core.Workflow;
-using IR.CLI.Common;
-using IR.Core;
+using IR.Core.Common;
 
 namespace IR.CLI
 {
@@ -14,10 +13,8 @@ namespace IR.CLI
     {
         static void Main(string[] args)
         {
-            IServiceProvider serviceProvider = ConfigureServices();
-
             // start the workflow host
-            var host = serviceProvider.GetService<IWorkflowHost>();
+            var host = ServiceProviderHolder.Instance.GetService<IWorkflowHost>();
             host.RegisterWorkflow<AuthorizeFlow>();        
             host.Start();        
 
@@ -27,21 +24,22 @@ namespace IR.CLI
             host.Stop();
         }
 
-        private static IServiceProvider ConfigureServices()
-        {
-            // setup dependency injection
-            IServiceCollection services = new ServiceCollection();            
-            services.AddLogging(); // TODO: add logging (?)
-            services.AddWorkflow();
-            services.AddSingleton<IConfigurationFactory, ConfigurationFactory>();
-            // services.AddTransient<GoodbyeWorld>();
-            
-            var serviceProvider = services.BuildServiceProvider();
+        // private static IServiceProvider ConfigureServices()
+        // {
+        //     // setup dependency injection
+        //     IServiceCollection services = new ServiceCollection();            
+        //     services.AddLogging(); // TODO: add logging (?)
+        //     services.AddWorkflow();
+        //     services.AddSingleton<IConfigurationFactory, ConfigurationFactory>();
 
-            // config logging
-            var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
-            //loggerFactory.AddDebug();
-            return serviceProvider;
-        }
+        //     // services.AddTransient<GoodbyeWorld>();
+            
+        //     var serviceProvider = services.BuildServiceProvider();
+
+        //     // config logging
+        //     //var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
+        //     //loggerFactory.AddDebug();
+        //     return serviceProvider;
+        // }
     }
 }
