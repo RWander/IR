@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 using WorkflowCore.Interface;
 
@@ -9,9 +8,9 @@ using IR.Core.Common;
 
 namespace IR.CLI
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             // start the workflow host
             var host = ServiceProviderHolder.Instance.GetService<IWorkflowHost>();
@@ -23,23 +22,5 @@ namespace IR.CLI
             Console.ReadLine();
             host.Stop();
         }
-
-        // private static IServiceProvider ConfigureServices()
-        // {
-        //     // setup dependency injection
-        //     IServiceCollection services = new ServiceCollection();            
-        //     services.AddLogging(); // TODO: add logging (?)
-        //     services.AddWorkflow();
-        //     services.AddSingleton<IConfigurationFactory, ConfigurationFactory>();
-
-        //     // services.AddTransient<GoodbyeWorld>();
-            
-        //     var serviceProvider = services.BuildServiceProvider();
-
-        //     // config logging
-        //     //var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
-        //     //loggerFactory.AddDebug();
-        //     return serviceProvider;
-        // }
     }
 }

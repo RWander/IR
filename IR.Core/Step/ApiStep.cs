@@ -1,4 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
 using WorkflowCore.Models;
 
 using IR.Core.Common;
@@ -9,9 +8,9 @@ namespace IR.Core.Step
     {
         protected ApiProxy Proxy;
 
-        protected ApiStep()
+        protected ApiStep(ApiProxy proxy)
         {
-            Proxy = ServiceProviderHolder.Instance.GetService<ApiProxy>();
+            Proxy = proxy;
         }
     }
 }
