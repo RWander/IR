@@ -1,8 +1,5 @@
-using System;
 using System.IO;
-using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.FileProviders;
 
 namespace IR.Core.Common
 {
@@ -13,35 +10,18 @@ namespace IR.Core.Common
 
     internal sealed class ConfigurationFactory: IConfigurationFactory
     {
-        // /// <summary>
-        // /// Use for ASP.NET Core Web applications.
-        // /// </summary>
-        // /// <param name="config"></param>
-        // /// <param name="env"></param>
-        // /// <returns></returns>
-        // public static IConfigurationBuilder Configure(IConfigurationBuilder config, IHostingEnvironment env)
-        // {
-        //     return Configure(config, env.EnvironmentName);
-        // }
-
-        /// <summary>
-        /// Use for .NET Core Console applications.
-        /// </summary>
-        /// <param name="config"></param>
-        /// <param name="env"></param>
-        /// <returns></returns>
-        private static IConfigurationBuilder Configure(IConfigurationBuilder config, Microsoft.Extensions.Hosting.IHostingEnvironment env)
+        private static IConfigurationBuilder Configure(string envName)
         {
-            return Configure(config, env.EnvironmentName);
-        }
+            const string name = "appsettings";
+            const string ext = "json";
 
-        private static IConfigurationBuilder Configure(IConfigurationBuilder config, string environmentName)
-        {
-            return config
+            var appSettings = string.IsNullOrEmpty(envName)
+                ? $"{name}.{ext}"
+                : $"{name}.{envName}.{ext}";
+
+            return new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{environmentName}.json", optional: true, reloadOnChange: true)
-                .AddEnvironmentVariables();
+                .AddJsonFile(appSettings, false, false);
         }
 
         /// <summary>
@@ -54,16 +34,11 @@ namespace IR.Core.Common
             {
                 if (_config == null)
                 {
-                    var env = new HostingEnvironment
-                    {
-                        EnvironmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
-                        ApplicationName = AppDomain.CurrentDomain.FriendlyName,
-                        ContentRootPath = AppDomain.CurrentDomain.BaseDirectory,
-                        ContentRootFileProvider = new PhysicalFileProvider(AppDomain.CurrentDomain.BaseDirectory)
-                    };
-
-                    var config = new ConfigurationBuilder();
-                    var configured = Configure(config, env);
+                    var env = string.Empty; // empty env is release
+#if DEBUG
+                    env = "debug";
+#endif
+                    var configured = Configure(env);
                     _config = configured.Build();
                 }
                 return _config;
