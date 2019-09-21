@@ -13,7 +13,7 @@ namespace IR.Core.Common
             services.AddLogging(); // TODO: add logging (?)
             services.AddWorkflow();
             services.AddSingleton<IConfigurationFactory, ConfigurationFactory>();
-            services.AddSingleton<ApiProxy>();
+            services.AddTransient<ApiProxy>();
 
             // TODO: refactoring: reflection on the 'Step' folder.
             services.AddSingleton<Step.Authorize>();

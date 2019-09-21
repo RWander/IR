@@ -13,4 +13,14 @@ namespace IR.Core.Step
             Proxy = proxy;
         }
     }
+
+    internal abstract class ApiStepAsync : StepBodyAsync
+    {
+        protected ApiProxy Proxy;
+
+        protected ApiStepAsync(ApiProxy proxy)
+        {
+            Proxy = proxy;
+        }
+    }
 }

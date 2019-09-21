@@ -1,38 +1,67 @@
 using System;
-using RestSharp;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+
+using IR.Core.Step;
 
 namespace IR.Core.Common
 {
-    internal sealed class ApiProxy // TODO: singleton?, IDisposable
+    internal sealed class ApiProxy: IDisposable
     {
-        private readonly string _token; // TODO: sandbox and regular token (see git-ignored .token file) 
-        private readonly IRestClient _client;
+        private HttpClient _client;
 
         public ApiProxy(IConfigurationFactory configFactory) 
         {
             var config = configFactory.Configuration;
 
             var baseUrl = config["baseUrl"];
-            _client = new RestClient(baseUrl);
-            _token = config["token"];
+            var token = config["token"];
 
-            //_client.Timeout = ? // TODO set Timeout.
-            //_client.Authenticator = new HttpBasicAuthenticator(accountSid, secretKey);
-            //_accountSid = accountSid;
-        }
-
-        public T Execute<T>(RestRequest req) where T : new() // TODO: private (?)
-        {
-            req.AddHeader("Authorization", $"Bearer {_token}"); // used on every request
-            var res = _client.Execute<T>(req);
-
-            if (res.ErrorException != null)
+            // HttpClint documentation is here https://docs.microsoft.com/en-us/aspnet/web-api/overview/advanced/calling-a-web-api-from-a-net-client
+            _client = new HttpClient
             {
-                const string msg = "Error retrieving response. Check inner details for more info.";
-                var ex = new Exception(msg, res.ErrorException);
-                throw ex;
-            }
-            return res.Data;
+                BaseAddress = new Uri(baseUrl)
+            };
+            _client.DefaultRequestHeaders.Accept.Clear();
+            _client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+            _client.DefaultRequestHeaders.Authorization = 
+                new AuthenticationHeaderValue("Bearer", token);
         }
+
+        /// <summary>
+        /// GET
+        /// </summary>
+        public async Task<T> GetAsync<T>(string path)
+            where T: class
+        {
+            // TODO: logging
+            T data;
+            var res = await _client.GetAsync(path);
+            if (res.IsSuccessStatusCode)
+            {
+                data = await res.Content.ReadAsAsync<T>();
+            }
+            else
+            {
+                // TODO: correct error handling
+                throw new Exception(res.StatusCode.ToString());
+            }
+            return data;
+        }
+
+        #region IDisposable implementation
+        void IDisposable.Dispose()
+        {
+            if (_client != null)
+            {
+                _client.Dispose();
+                _client = null;
+            }
+        }
+        #endregion
     }
 }
