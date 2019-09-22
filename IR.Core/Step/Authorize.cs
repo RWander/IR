@@ -1,5 +1,5 @@
 using System;
-
+using System.Threading.Tasks;
 using WorkflowCore.Interface;
 using WorkflowCore.Models;
 
@@ -7,11 +7,11 @@ using IR.Core.Common;
 
 namespace IR.Core.Step
 {
-    internal sealed class Authorize : ApiStep
+    internal sealed class Authorize : ApiStepAsync
     {
         public Authorize(ApiProxy proxy) : base(proxy) { }
 
-        public override ExecutionResult Run(IStepExecutionContext context)
+        public override async Task<ExecutionResult> RunAsync(IStepExecutionContext context)
         {
             // ..
             Console.WriteLine("Authorize - OK.");

@@ -1,11 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-
-using IR.Core.Step;
 
 namespace IR.Core.Common
 {
@@ -39,7 +35,7 @@ namespace IR.Core.Common
             where T: class
         {
             // TODO: logging
-            T data;
+            T data = null;
             var res = await _client.GetAsync(path);
             if (res.IsSuccessStatusCode)
             {
@@ -54,7 +50,7 @@ namespace IR.Core.Common
         }
 
         #region IDisposable implementation
-        void IDisposable.Dispose()
+        public void Dispose()
         {
             if (_client != null)
             {
