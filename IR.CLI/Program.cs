@@ -14,12 +14,22 @@ namespace IR.CLI
         {
             // start the workflow host
             var host = ServiceProviderHolder.Instance.GetService<IWorkflowHost>();
-            host.RegisterWorkflow<AuthorizeFlow>();        
-            host.Start();        
 
-            host.StartWorkflow("Authorize");
+#if DEBUG
+            // TODO: prepare sandbox
+            // ..
+#endif
+
+            host.RegisterWorkflow<AuthorizeFlow>();        
+            host.Start();
+
+            host.StartWorkflow(nameof(AuthorizeFlow));
             
             Console.ReadLine();
+#if DEBUG
+            // TODO: clear sandbox
+            // ..
+#endif
             host.Stop();
         }
     }

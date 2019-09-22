@@ -6,7 +6,7 @@ namespace IR.Core.Workflow
 {
     public sealed class AuthorizeFlow : IWorkflow
     {
-        public string Id => "Authorize";
+        public string Id => nameof(AuthorizeFlow);
 
         public int Version => 1;
 
