@@ -49,6 +49,25 @@ namespace IR.Core.Common
             return data;
         }
 
+        public async Task<T> POSTAsync<T>(string path, string json)
+            where T : class
+        {
+            // TODO: logging
+            T data = null;
+            var content = new StringContent(json);
+            var res = await _client.PostAsync(path, content);
+            if (res.IsSuccessStatusCode)
+            {
+                data = await res.Content.ReadAsAsync<T>();
+            }
+            else
+            {
+                // TODO: correct error handling
+                throw new Exception(res.StatusCode.ToString());
+            }
+            return data;
+        }
+
         #region IDisposable implementation
         public void Dispose()
         {

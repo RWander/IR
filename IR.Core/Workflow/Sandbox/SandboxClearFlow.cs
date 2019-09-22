@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using WorkflowCore.Interface;
+﻿using WorkflowCore.Interface;
+
+using IR.Core.Step.Sandbox;
 
 namespace IR.Core.Workflow.Sandbox
 {
-    internal sealed class SandboxClearFlow
+    public sealed class SandboxClearFlow: IWorkflow
     {
         public string Id => nameof(SandboxClearFlow);
 
@@ -13,12 +12,8 @@ namespace IR.Core.Workflow.Sandbox
 
         public void Build(IWorkflowBuilder<object> builder)
         {
-            // TODO: SandboxClearFlow logic
-            // .. 
-
-            //builder
-            //    .StartWith<Authorize>()
-            //    .Then<GetOrders>();
+            builder
+                .StartWith<Clear>();
         }
     }
 }

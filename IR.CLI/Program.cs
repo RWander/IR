@@ -5,6 +5,7 @@ using WorkflowCore.Interface;
 
 using IR.Core.Workflow;
 using IR.Core.Common;
+using IR.Core.Workflow.Sandbox;
 
 namespace IR.CLI
 {
@@ -14,21 +15,21 @@ namespace IR.CLI
         {
             // start the workflow host
             var host = ServiceProviderHolder.Instance.GetService<IWorkflowHost>();
+            host.RegisterWorkflow<AuthorizeFlow>();
 
 #if DEBUG
-            // TODO: prepare sandbox
-            // ..
-#endif
-
-            host.RegisterWorkflow<AuthorizeFlow>();        
+            host.RegisterWorkflow<SandboxInitFlow>();
+            host.RegisterWorkflow<SandboxClearFlow>();
             host.Start();
+
+            host.StartWorkflow(nameof(SandboxInitFlow));
+#endif
 
             host.StartWorkflow(nameof(AuthorizeFlow));
             
             Console.ReadLine();
 #if DEBUG
-            // TODO: clear sandbox
-            // ..
+            host.StartWorkflow(nameof(SandboxClearFlow));
 #endif
             host.Stop();
         }

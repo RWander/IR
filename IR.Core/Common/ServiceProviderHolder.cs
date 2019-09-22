@@ -1,4 +1,5 @@
 using System;
+
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IR.Core.Common
@@ -18,6 +19,11 @@ namespace IR.Core.Common
             // TODO: refactoring: reflection on the 'Step' folder.
             services.AddSingleton<Step.Authorize>();
             services.AddSingleton<Step.GetOrders>();
+#if DEBUG
+            services.AddSingleton<Step.Sandbox.Register>();
+            services.AddSingleton<Step.Sandbox.CurrenciesBalance>();
+            services.AddSingleton<Step.Sandbox.Clear>();
+#endif
 
             Instance = services.BuildServiceProvider();
         }

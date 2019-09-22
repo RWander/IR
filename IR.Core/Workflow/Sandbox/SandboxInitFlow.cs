@@ -1,8 +1,10 @@
 ﻿using WorkflowCore.Interface;
 
+using IR.Core.Step.Sandbox;
+
 namespace IR.Core.Workflow.Sandbox
 {
-    internal sealed class SandboxInitFlow: IWorkflow
+    public sealed class SandboxInitFlow: IWorkflow
     {
         public string Id => nameof(SandboxInitFlow);
 
@@ -10,12 +12,9 @@ namespace IR.Core.Workflow.Sandbox
 
         public void Build(IWorkflowBuilder<object> builder)
         {
-            // TODO: SandboxInitFlow logic
-            // .. 
-
-            //builder
-            //    .StartWith<Authorize>()
-            //    .Then<GetOrders>();
+            builder
+                .StartWith<Register>()
+                .Then<CurrenciesBalance>();
         }
     }
 }

@@ -34,6 +34,24 @@ namespace IR.Core.Step
             return resObj;
         }
 
+        protected async Task<ResponseObject> POSTAsync(string path, string json = "")
+        {
+            // TODO: logging
+            ResponseObject resObj;
+            try
+            {
+                resObj = await _proxy.POSTAsync<ResponseObject>(path, json);
+                Console.WriteLine($"path={path}");
+                Console.WriteLine($"response={resObj}");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            return resObj;
+        }
+
         void IDisposable.Dispose()
         {
             if (_proxy != null)
