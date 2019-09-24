@@ -18,12 +18,12 @@ namespace IR.Core.Step.Sandbox
 
             if (resObj.IsOk)
             {
-                Console.WriteLine("Register - OK.");
+                Console.WriteLine($"{nameof(Register)} - OK.");
                 return ExecutionResult.Outcome(true);
             }
             else
             {
-                Console.WriteLine("Register - Fail.");
+                Console.WriteLine($"{nameof(Register)} - Fail.");
                 return ExecutionResult.Persist(false);
             }
         }

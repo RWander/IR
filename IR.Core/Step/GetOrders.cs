@@ -19,7 +19,7 @@ namespace IR.Core.Step
             // TODO: get orders logic is here
             // ..
             
-            Console.WriteLine("GetOrders - OK.");
+            Console.WriteLine($"{nameof(GetOrders)} - OK.");
 
             return ExecutionResult.Next();
         }

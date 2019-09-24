@@ -15,7 +15,7 @@ namespace IR.Core.Step.Sandbox
         public override async Task<ExecutionResult> RunAsync(IStepExecutionContext context)
         {
             // ..
-            Console.WriteLine("CurrenciesBalance - OK.");
+            Console.WriteLine($"{nameof(CurrenciesBalance)} - OK.");
             return ExecutionResult.Next();
         }
     }

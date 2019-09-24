@@ -7,9 +7,9 @@ using IR.Core.Common;
 
 namespace IR.Core.Step
 {
-    internal abstract class ApiStepAsync : StepBodyAsync, IDisposable
+    internal abstract class ApiStepAsync : StepBodyAsync
     {
-        private ApiProxy _proxy;
+        private readonly ApiProxy _proxy; // NB: <-- singleton
 
         protected ApiStepAsync(ApiProxy proxy)
         {
@@ -50,15 +50,6 @@ namespace IR.Core.Step
                 throw;
             }
             return resObj;
-        }
-
-        void IDisposable.Dispose()
-        {
-            if (_proxy != null)
-            {
-                _proxy.Dispose();
-                _proxy = null;
-            }
         }
     }
 }

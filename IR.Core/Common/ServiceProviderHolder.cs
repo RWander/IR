@@ -14,11 +14,13 @@ namespace IR.Core.Common
             services.AddLogging(); // TODO: add logging (?)
             services.AddWorkflow();
             services.AddSingleton<IConfigurationFactory, ConfigurationFactory>();
-            services.AddTransient<ApiProxy>();
+            services.AddSingleton<ApiProxy>(); // TODO: Transient or Singleton
 
             // TODO: refactoring: reflection on the 'Step' folder.
+            services.AddTransient<Step.Initialize>();
             services.AddTransient<Step.Authorize>();
             services.AddTransient<Step.GetOrders>();
+            services.AddTransient<Step.Finalize>();
 #if DEBUG
             services.AddTransient<Step.Sandbox.Register>();
             services.AddTransient<Step.Sandbox.CurrenciesBalance>();

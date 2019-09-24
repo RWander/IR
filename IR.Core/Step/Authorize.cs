@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+
 using WorkflowCore.Interface;
 using WorkflowCore.Models;
 
@@ -14,7 +15,7 @@ namespace IR.Core.Step
         public override async Task<ExecutionResult> RunAsync(IStepExecutionContext context)
         {
             // ..
-            Console.WriteLine("Authorize - OK.");
+            Console.WriteLine($"{nameof(Authorize)} - OK.");
             return ExecutionResult.Next();
         }
     }
