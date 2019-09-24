@@ -17,12 +17,12 @@ namespace IR.Core.Common
             services.AddTransient<ApiProxy>();
 
             // TODO: refactoring: reflection on the 'Step' folder.
-            services.AddSingleton<Step.Authorize>();
-            services.AddSingleton<Step.GetOrders>();
+            services.AddTransient<Step.Authorize>();
+            services.AddTransient<Step.GetOrders>();
 #if DEBUG
-            services.AddSingleton<Step.Sandbox.Register>();
-            services.AddSingleton<Step.Sandbox.CurrenciesBalance>();
-            services.AddSingleton<Step.Sandbox.Clear>();
+            services.AddTransient<Step.Sandbox.Register>();
+            services.AddTransient<Step.Sandbox.CurrenciesBalance>();
+            services.AddTransient<Step.Sandbox.Clear>();
 #endif
 
             Instance = services.BuildServiceProvider();

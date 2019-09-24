@@ -1,11 +1,12 @@
 ﻿using System;
+
 using Microsoft.Extensions.DependencyInjection;
 
 using WorkflowCore.Interface;
 
 using IR.Core.Workflow;
 using IR.Core.Common;
-using IR.Core.Workflow.Sandbox;
+using IR.Core.Domain;
 
 namespace IR.CLI
 {
@@ -15,22 +16,12 @@ namespace IR.CLI
         {
             // start the workflow host
             var host = ServiceProviderHolder.Instance.GetService<IWorkflowHost>();
-            host.RegisterWorkflow<AuthorizeFlow>();
-
-#if DEBUG
-            host.RegisterWorkflow<SandboxInitFlow>();
-            host.RegisterWorkflow<SandboxClearFlow>();
+            host.RegisterWorkflow<MagicFlow, MagicStore>();
             host.Start();
 
-            host.StartWorkflow(nameof(SandboxInitFlow));
-#endif
-
-            host.StartWorkflow(nameof(AuthorizeFlow));
+            host.StartWorkflow(nameof(MagicFlow));
             
             Console.ReadLine();
-#if DEBUG
-            host.StartWorkflow(nameof(SandboxClearFlow));
-#endif
             host.Stop();
         }
     }

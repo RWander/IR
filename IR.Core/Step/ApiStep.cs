@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
+
 using WorkflowCore.Models;
 
 using IR.Core.Common;
-using IR.Core.Domain;
 
 namespace IR.Core.Step
 {

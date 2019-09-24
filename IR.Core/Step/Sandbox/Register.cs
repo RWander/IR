@@ -16,11 +16,16 @@ namespace IR.Core.Step.Sandbox
         {
             var resObj = await POSTAsync("sandbox/register");
 
-            // TODO: get orders logic is here
-            // ..
-
-            Console.WriteLine("Register - OK.");
-            return ExecutionResult.Next();
+            if (resObj.IsOk)
+            {
+                Console.WriteLine("Register - OK.");
+                return ExecutionResult.Outcome(true);
+            }
+            else
+            {
+                Console.WriteLine("Register - Fail.");
+                return ExecutionResult.Persist(false);
+            }
         }
     }
 }
