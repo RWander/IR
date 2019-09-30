@@ -1,4 +1,5 @@
 using WorkflowCore.Interface;
+using WorkflowCore.Models;
 
 using IR.Core.Domain;
 using IR.Core.Step;
@@ -14,6 +15,7 @@ namespace IR.Core.Workflow
                 .StartWith<Initialize>()
 #if DEBUG
                 .Then<Register>()
+                .OnError(WorkflowErrorHandling.Terminate)
                 .Then<CurrenciesBalance>()
 #endif
                 .Then<Authorize>()
