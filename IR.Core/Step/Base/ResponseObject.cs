@@ -19,7 +19,7 @@ namespace IR.Core.Step
 
         public override string ToString()
         {
-            return $"TrackingId:{TrackingId}; Status:{Status}; Payload:{Payload}";
+            return $"Status:{Status}; Payload:{Payload}";
         }
     }
 }

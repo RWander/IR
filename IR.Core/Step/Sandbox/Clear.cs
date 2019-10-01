@@ -1,22 +1,13 @@
-﻿using System;
-using System.Threading.Tasks;
-
-using WorkflowCore.Interface;
-using WorkflowCore.Models;
-
-using IR.Core.Common;
+﻿using IR.Core.Common;
 
 namespace IR.Core.Step.Sandbox
 {
-    internal sealed class Clear: ApiStepAsync
+    internal sealed class Clear: ApiMethodAsync
     {
-        public Clear(ApiProxy proxy) : base(proxy) { }
+        protected override string Method => "sandbox/clear";
 
-        public override async Task<ExecutionResult> RunAsync(IStepExecutionContext context)
-        {
-            // ..
-            Console.WriteLine($"{nameof(Clear)} - OK.");
-            return ExecutionResult.Next();
-        }
+        protected override EApiMethodType MethodType => EApiMethodType.POST;
+
+        public Clear(ApiProxy proxy) : base(proxy) { }
     }
 }

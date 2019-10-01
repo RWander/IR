@@ -11,15 +11,15 @@ namespace IR.Core.Step
 {
     internal abstract class ApiMethodAsync: ApiStepAsync
     {
-        public abstract string Method { get; }
-        public virtual string MethodData { get; } = string.Empty;
-        public abstract EApiMethodType MethodType { get; }
+        protected abstract string Method { get; }
+        protected virtual string MethodData { get; } = string.Empty;
+        protected abstract EApiMethodType MethodType { get; }
 
         public ApiMethodAsync(ApiProxy proxy) : base(proxy) { }
 
-        public override sealed async Task<ExecutionResult> RunAsync(IStepExecutionContext context)
+        public sealed override async Task<ExecutionResult> RunAsync(IStepExecutionContext context)
         {
-            ResponseObject resObj = null;
+            ResponseObject resObj;
             try
             {
                 switch (MethodType)
@@ -62,8 +62,10 @@ namespace IR.Core.Step
                         // ..
                         throw new NotImplementedException("TODO");
                     default:
-                        throw new WorkflowAbortException($"Exception in {method} method.", e);
+                        throw new IndexOutOfRangeException($"Unknown {nameof(MethodType)}={MethodType}.");
                 }
+
+                throw new WorkflowAbortException($"Exception in {method} method.", e);
             }
 
             Debug.Assert(resObj != null);

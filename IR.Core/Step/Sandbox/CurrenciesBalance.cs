@@ -1,22 +1,19 @@
-﻿using System;
-using System.Threading.Tasks;
-
-using WorkflowCore.Interface;
-using WorkflowCore.Models;
-
-using IR.Core.Common;
+﻿using IR.Core.Common;
 
 namespace IR.Core.Step.Sandbox
 {
-    internal sealed class CurrenciesBalance: ApiStepAsync
+    internal sealed class CurrenciesBalance: ApiMethodAsync
     {
-        public CurrenciesBalance(ApiProxy proxy) : base(proxy) { }
+        protected override string Method => "sandbox/currencies/balance";
 
-        public override async Task<ExecutionResult> RunAsync(IStepExecutionContext context)
+        protected override string MethodData { get; } = @"
         {
-            // ..
-            Console.WriteLine($"{nameof(CurrenciesBalance)} - OK.");
-            return ExecutionResult.Next();
-        }
+          ""currency"": ""RUB"",
+          ""balance"": 100000
+        }";
+
+        protected override EApiMethodType MethodType => EApiMethodType.POST;
+
+        public CurrenciesBalance(ApiProxy proxy) : base(proxy) { }
     }
 }
