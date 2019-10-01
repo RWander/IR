@@ -1,6 +1,6 @@
 ﻿namespace IR.Core.Domain
 {
-    public sealed class Market
+    public sealed class Stock
     {
     }
 }

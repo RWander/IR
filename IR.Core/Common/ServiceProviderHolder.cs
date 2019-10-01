@@ -20,6 +20,7 @@ namespace IR.Core.Common
             services.AddTransient<Step.Initialize>();
             services.AddTransient<Step.Authorize>();
             services.AddTransient<Step.GetPortfolio>();
+            services.AddTransient<Step.GetOperations>();
             services.AddTransient<Step.Finalize>();
 #if DEBUG
             services.AddTransient<Step.Sandbox.Register>();

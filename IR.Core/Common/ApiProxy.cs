@@ -39,7 +39,7 @@ namespace IR.Core.Common
             var res = await _client.GetAsync(path);
             if (res.IsSuccessStatusCode)
             {
-                var s = await res.Content.ReadAsStringAsync();
+                //var s = await res.Content.ReadAsStringAsync();
                 data = await res.Content.ReadAsAsync<T>();
             }
             else

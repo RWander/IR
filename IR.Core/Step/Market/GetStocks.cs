@@ -1,4 +1,7 @@
-﻿using IR.Core.Common;
+﻿using System.Collections.Generic;
+
+using IR.Core.Common;
+using IR.Core.Domain;
 
 namespace IR.Core.Step.Market
 {
@@ -7,6 +10,8 @@ namespace IR.Core.Step.Market
         protected override string Method => "market/stocks";
 
         protected override EApiMethodType MethodType => EApiMethodType.GET;
+
+        public IList<Stock> Stocks { get; set; }
 
         public GetStocks(ApiProxy proxy) : base(proxy) { }
     }

@@ -16,7 +16,9 @@ namespace IR.Core.Workflow
 #endif
                 .Then<Step.Authorize>()
                 .Then<Step.GetPortfolio>()
+                    .Output(data => data.Portfolio, step => step.Portfolio)
                 .Then<Step.Market.GetStocks>()
+                    .Output(data => data.Stocks, step => step.Stocks)
 #if DEBUG
                 .Then<Step.Sandbox.Clear>()
 #endif
