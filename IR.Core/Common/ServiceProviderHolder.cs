@@ -19,13 +19,14 @@ namespace IR.Core.Common
             // TODO: refactoring: reflection on the 'Step' folder.
             services.AddTransient<Step.Initialize>();
             services.AddTransient<Step.Authorize>();
-            services.AddTransient<Step.GetOrders>();
+            services.AddTransient<Step.GetPortfolio>();
             services.AddTransient<Step.Finalize>();
 #if DEBUG
             services.AddTransient<Step.Sandbox.Register>();
             services.AddTransient<Step.Sandbox.CurrenciesBalance>();
             services.AddTransient<Step.Sandbox.Clear>();
 #endif
+            services.AddTransient<Step.Market.GetStocks>();
 
             Instance = services.BuildServiceProvider();
         }

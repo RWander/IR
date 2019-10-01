@@ -1,8 +1,6 @@
 using WorkflowCore.Interface;
 
 using IR.Core.Domain;
-using IR.Core.Step;
-using IR.Core.Step.Sandbox;
 
 namespace IR.Core.Workflow
 {
@@ -11,16 +9,18 @@ namespace IR.Core.Workflow
         public void Build(IWorkflowBuilder<MagicStore> builder)
         {
             builder
-                .StartWith<Initialize>()
+                .StartWith<Step.Initialize>()
 #if DEBUG
-                .Then<Register>()
-                .Then<CurrenciesBalance>()
+                .Then<Step.Sandbox.Register>()
+                .Then<Step.Sandbox.CurrenciesBalance>()
 #endif
-                .Then<Authorize>()
+                .Then<Step.Authorize>()
+                .Then<Step.GetPortfolio>()
+                .Then<Step.Market.GetStocks>()
 #if DEBUG
-                .Then<Clear>()
+                .Then<Step.Sandbox.Clear>()
 #endif
-                .Then<Finalize>();
+                .Then<Step.Finalize>();
         }
 
         public string Id => nameof(MagicFlow);

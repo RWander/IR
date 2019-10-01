@@ -15,7 +15,7 @@ namespace IR.Core.Step
         protected virtual string MethodData { get; } = string.Empty;
         protected abstract EApiMethodType MethodType { get; }
 
-        public ApiMethodAsync(ApiProxy proxy) : base(proxy) { }
+        protected ApiMethodAsync(ApiProxy proxy) : base(proxy) { }
 
         public sealed override async Task<ExecutionResult> RunAsync(IStepExecutionContext context)
         {
