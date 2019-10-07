@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace IR.Core.Common
@@ -45,7 +46,7 @@ namespace IR.Core.Common
             else
             {
                 // TODO: correct error handling
-                throw new Exception(res.StatusCode.ToString());
+                throw new Exception(ResponseError.ToString(path, null, res.ToString()));
             }
             return data;
         }
@@ -64,7 +65,7 @@ namespace IR.Core.Common
             else
             {
                 // TODO: correct error handling
-                throw new Exception(res.StatusCode.ToString());
+                throw new Exception(ResponseError.ToString(path, json, res.ToString()));
             }
             return data;
         }
@@ -76,6 +77,33 @@ namespace IR.Core.Common
             {
                 _client.Dispose();
                 _client = null;
+            }
+        }
+        #endregion
+
+        #region [Nested classes]
+        private sealed class ResponseError
+        {
+            public string Method { get; }
+            public string Param { get; }
+            public string Error { get; }
+
+            public ResponseError(string method, string param, string error)
+            {
+                Method = method;
+                Param = param;
+                Error = error;
+            }
+
+            public static string ToString(string method, string param, string error)
+            {
+                var err = new ResponseError(method, param, error);
+                return err.ToString();
+            }
+
+            public override string ToString()
+            {
+                return $"\nMethod: {Method}\nParam: {Param}\nError: {Error}";
             }
         }
         #endregion

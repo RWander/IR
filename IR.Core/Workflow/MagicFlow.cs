@@ -1,6 +1,9 @@
 using WorkflowCore.Interface;
 
 using IR.Core.Domain;
+using IR.Core.Step;
+using Sandbox = IR.Core.Step.Sandbox;
+using Market = IR.Core.Step.Market;
 
 namespace IR.Core.Workflow
 {
@@ -9,22 +12,48 @@ namespace IR.Core.Workflow
         public void Build(IWorkflowBuilder<MagicStore> builder)
         {
             builder
-                .StartWith<Step.Initialize>()
+                .StartWith<Initialize>()
 #if DEBUG
-                .Then<Step.Sandbox.Register>()
-                .Then<Step.Sandbox.CurrenciesBalance>()
+                .Then<Sandbox.Register>()
+                .Then<Sandbox.SetCurrenciesBalance>()
+                    .Input(
+                        s => s.RequestBodyObj,
+                        d => new Sandbox.SetCurrenciesBalance.RequestBody
+                        {
+                            Currency = "RUB",
+                            Balance = 100000
+                        }
+                    )
 #endif
-                .Then<Step.Authorize>()
-                .Then<Step.GetPortfolio>()
-                    .Output(data => data.Portfolio, step => step.Portfolio)
-                .Then<Step.Market.GetStocks>()
-                    .Output(data => data.Stocks, step => step.Stocks)
-                .Then<Step.RunWatchers>()
-                    .Output(data => data.Candles, step => step.Candles)
+                .Then<Authorize>()
+                .Then<GetPortfolio>()
+                    .Output(d => d.Portfolio, s => s.Portfolio)
 #if DEBUG
-                .Then<Step.Sandbox.Clear>()
+                .Then<CreateLimitOrder>()
+                    .Input(
+                        s => s.Figi,
+                        d => "BBG006L8G4H1" // YNDX
+                    )
+                    .Input(
+                        s => s.RequestBodyObj,
+                        d => new CreateLimitOrder.RequestBody
+                        {
+                            Lots = 5,
+                            Operation = "Buy",
+                            Price = 2300
+                        }
+                    )
+                .Then<GetPortfolio>()
+                    .Output(d => d.Portfolio, s => s.Portfolio)
 #endif
-                .Then<Step.Finalize>();
+                //.Then<Market.GetStocks>()
+                //    .Output(d => d.Stocks, s => s.Stocks)
+                .Then<RunWatchers>()
+                    .Output(d => d.Candles, s => s.Candles)
+#if DEBUG
+                .Then<Sandbox.Clear>()
+#endif
+                .Then<Finalize>();
         }
 
         public string Id => nameof(MagicFlow);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 using WorkflowCore.Interface;
 using WorkflowCore.Models;
@@ -9,10 +10,11 @@ using IR.Core.Common;
 
 namespace IR.Core.Step
 {
-    internal abstract class ApiMethodAsync: ApiStepAsync
+    internal abstract class ApiMethodAsync<TReqBody>: ApiStepAsync
+        where TReqBody: class, new()
     {
+        public TReqBody RequestBodyObj { get; set; }
         protected abstract string Method { get; }
-        protected virtual string MethodData { get; } = string.Empty;
         protected abstract EApiMethodType MethodType { get; }
 
         protected ApiMethodAsync(ApiProxy proxy) : base(proxy) { }
@@ -28,7 +30,8 @@ namespace IR.Core.Step
                         resObj = await GETAsync(Method);
                         break;
                     case EApiMethodType.POST:
-                        resObj = await POSTAsync(Method, MethodData);
+                        var reqBody = JsonSerializer.Serialize(RequestBodyObj);
+                        resObj = await POSTAsync(Method, reqBody);
                         break;
                     case EApiMethodType.PUT:
                         // TODO: implement

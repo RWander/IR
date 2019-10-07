@@ -21,10 +21,11 @@ namespace IR.Core.Common
             services.AddTransient<Step.Authorize>();
             services.AddTransient<Step.GetPortfolio>();
             services.AddTransient<Step.GetOperations>();
+            services.AddTransient<Step.CreateLimitOrder>();
             services.AddTransient<Step.Finalize>();
 #if DEBUG
             services.AddTransient<Step.Sandbox.Register>();
-            services.AddTransient<Step.Sandbox.CurrenciesBalance>();
+            services.AddTransient<Step.Sandbox.SetCurrenciesBalance>();
             services.AddTransient<Step.Sandbox.Clear>();
 #endif
             services.AddTransient<Step.Market.GetStocks>();
