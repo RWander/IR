@@ -2,7 +2,7 @@
 
 namespace IR.Core.Step.Sandbox
 {
-    internal sealed class Register: ApiMethodAsync<object>
+    internal sealed class Register: ApiMethodAsync<object, object>
     {
         protected override string Method => "sandbox/register";
 

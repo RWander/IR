@@ -1,3 +1,4 @@
+using IR.Core.Step;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -32,16 +33,16 @@ namespace IR.Core.Common
         /// <summary>
         /// GET
         /// </summary>
-        public async Task<T> GetAsync<T>(string path)
-            where T: class
+        public async Task<ResponseObject<TResPayload>> GetAsync<TResPayload>(string path)
+            where TResPayload : class, new()
         {
             // TODO: logging
-            T data = null;
+            ResponseObject<TResPayload> data;
             var res = await _client.GetAsync(path);
             if (res.IsSuccessStatusCode)
             {
-                //var s = await res.Content.ReadAsStringAsync();
-                data = await res.Content.ReadAsAsync<T>();
+                var resJson = await res.Content.ReadAsStringAsync();
+                data = ResponseObject<TResPayload>.Build<TResPayload>(resJson);
             }
             else
             {
@@ -51,16 +52,17 @@ namespace IR.Core.Common
             return data;
         }
 
-        public async Task<T> POSTAsync<T>(string path, string json)
-            where T : class
+        public async Task<ResponseObject<TResPayload>> POSTAsync<TResPayload>(string path, string json)
+            where TResPayload : class, new()
         {
             // TODO: logging
-            T data = null;
+            ResponseObject<TResPayload> data;
             var content = new StringContent(json);
             var res = await _client.PostAsync(path, content);
             if (res.IsSuccessStatusCode)
             {
-                data = await res.Content.ReadAsAsync<T>();
+                var resJson = await res.Content.ReadAsStringAsync();
+                data = ResponseObject<TResPayload>.Build<TResPayload>(resJson);
             }
             else
             {

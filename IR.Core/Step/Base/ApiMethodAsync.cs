@@ -10,8 +10,9 @@ using IR.Core.Common;
 
 namespace IR.Core.Step
 {
-    internal abstract class ApiMethodAsync<TReqBody>: ApiStepAsync
+    internal abstract class ApiMethodAsync<TReqBody, TResPayload> : ApiStepAsync
         where TReqBody: class, new()
+        where TResPayload: class, new()
     {
         public TReqBody RequestBodyObj { get; set; }
         protected abstract string Method { get; }
@@ -21,17 +22,17 @@ namespace IR.Core.Step
 
         public sealed override async Task<ExecutionResult> RunAsync(IStepExecutionContext context)
         {
-            ResponseObject resObj;
+            ResponseObject<TResPayload> resObj;
             try
             {
                 switch (MethodType)
                 {
                     case EApiMethodType.GET:
-                        resObj = await GETAsync(Method);
+                        resObj = await GETAsync<TResPayload>(Method);
                         break;
                     case EApiMethodType.POST:
                         var reqBody = JsonSerializer.Serialize(RequestBodyObj);
-                        resObj = await POSTAsync(Method, reqBody);
+                        resObj = await POSTAsync<TResPayload>(Method, reqBody);
                         break;
                     case EApiMethodType.PUT:
                         // TODO: implement
@@ -74,7 +75,7 @@ namespace IR.Core.Step
             Debug.Assert(resObj != null);
             if (resObj.IsOk == false)
             {
-                throw new WorkflowAbortException(resObj.Status);
+                throw new WorkflowAbortException(resObj.ToString());
             }
 
             return ExecutionResult.Next();

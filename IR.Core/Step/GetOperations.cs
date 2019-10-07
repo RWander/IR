@@ -2,7 +2,7 @@
 
 namespace IR.Core.Step
 {
-    internal sealed class GetOperations : ApiMethodAsync<object>
+    internal sealed class GetOperations : ApiMethodAsync<object, object>
     {
         protected override string Method => "operations";
 

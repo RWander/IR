@@ -3,7 +3,7 @@ using IR.Core.Domain;
 
 namespace IR.Core.Step
 {
-    internal sealed class GetPortfolio : ApiMethodAsync<object>
+    internal sealed class GetPortfolio : ApiMethodAsync<object, object>
     {
         protected override string Method => "portfolio";
 

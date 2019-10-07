@@ -16,20 +16,22 @@ namespace IR.Core.Step
             _proxy = proxy;
         }
 
-        protected async Task<ResponseObject> GETAsync(string path)
+        protected async Task<ResponseObject<TResPayload>> GETAsync<TResPayload>(string path)
+            where TResPayload: class, new()
         {
             // TODO: logging
-            var resObj = await _proxy.GetAsync<ResponseObject>(path);
+            var resObj = await _proxy.GetAsync<TResPayload>(path);
             Console.WriteLine($"path={path}");
             Console.WriteLine($"response={resObj}");
 
             return resObj;
         }
 
-        protected async Task<ResponseObject> POSTAsync(string path, string json)
+        protected async Task<ResponseObject<TResPayload>> POSTAsync<TResPayload>(string path, string json)
+            where TResPayload : class, new()
         {
             // TODO: logging
-            var resObj = await _proxy.POSTAsync<ResponseObject>(path, json);
+            var resObj = await _proxy.POSTAsync<TResPayload>(path, json);
             Console.WriteLine($"path={path}");
             Console.WriteLine($"response={resObj}");
 

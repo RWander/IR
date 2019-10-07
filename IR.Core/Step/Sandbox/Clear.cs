@@ -2,7 +2,7 @@
 
 namespace IR.Core.Step.Sandbox
 {
-    internal sealed class Clear: ApiMethodAsync<object>
+    internal sealed class Clear: ApiMethodAsync<object, object>
     {
         protected override string Method => "sandbox/clear";
 

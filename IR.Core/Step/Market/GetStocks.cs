@@ -5,7 +5,7 @@ using IR.Core.Domain;
 
 namespace IR.Core.Step.Market
 {
-    internal sealed class GetStocks : ApiMethodAsync<object>
+    internal sealed class GetStocks : ApiMethodAsync<object, object>
     {
         protected override string Method => "market/stocks";
 

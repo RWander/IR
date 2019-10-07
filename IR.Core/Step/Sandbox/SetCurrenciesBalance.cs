@@ -4,9 +4,10 @@ using IR.Core.Common;
 
 namespace IR.Core.Step.Sandbox
 {
-    internal sealed class SetCurrenciesBalance: ApiMethodAsync<SetCurrenciesBalance.RequestBody>
+    internal sealed class SetCurrenciesBalance:
+        ApiMethodAsync<SetCurrenciesBalance.RequestBody, SetCurrenciesBalance.ResponsePayload>
     {
-        #region [API param]
+        #region [Request, Response]
         public sealed class RequestBody
         {
             [JsonPropertyName("currency")]
@@ -14,6 +15,10 @@ namespace IR.Core.Step.Sandbox
 
             [JsonPropertyName("balance")]
             public int Balance { get; set; }
+        }
+
+        public sealed class ResponsePayload
+        {
         }
         #endregion
 

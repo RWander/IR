@@ -5,13 +5,14 @@ using IR.Core.Domain;
 
 namespace IR.Core.Step
 {
-    internal sealed class CreateLimitOrder: ApiMethodAsync<CreateLimitOrder.RequestBody>
+    internal sealed class CreateLimitOrder:
+        ApiMethodAsync<CreateLimitOrder.RequestBody, CreateLimitOrder.ResponsePayload>
     {
         #region [Request params]
         public string Figi { get; set; }
         #endregion
 
-        #region [Request body]
+        #region [Request, Response]
         public sealed class RequestBody
         {
             [JsonPropertyName("lots")]
@@ -22,6 +23,10 @@ namespace IR.Core.Step
             
             [JsonPropertyName("price")]
             public uint Price { get; set; }
+        }
+
+        public sealed class ResponsePayload
+        {
         }
         #endregion
 
