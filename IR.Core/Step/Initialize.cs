@@ -14,8 +14,14 @@ namespace IR.Core.Step
 
         public override async Task<ExecutionResult> RunAsync(IStepExecutionContext context)
         {
+            // TODO
             // ..
-            Console.WriteLine($"{nameof(Initialize)} - OK.");
+
+            await Task.Run(() =>
+            {
+                Console.WriteLine($"{nameof(Initialize)} - OK.");
+            });
+
             return ExecutionResult.Next();
         }
     }

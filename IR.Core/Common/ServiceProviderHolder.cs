@@ -28,6 +28,7 @@ namespace IR.Core.Common
             services.AddTransient<Step.Sandbox.Clear>();
 #endif
             services.AddTransient<Step.Market.GetStocks>();
+            services.AddTransient<Step.RunWatchers>();
 
             Instance = services.BuildServiceProvider();
         }

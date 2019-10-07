@@ -1,16 +1,17 @@
 using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
-using WorkflowCore.Interface;
 using WorkflowCore.Models;
+using WorkflowCore.Interface;
 
-using IR.Core.Common;
+using IR.Core.Domain;
 
 namespace IR.Core.Step
 {
-    internal sealed class Authorize : ApiStepAsync
+    internal sealed class RunWatchers : StepBodyAsync
     {
-        public Authorize(ApiProxy proxy) : base(proxy) { }
+        public IList<Candle> Candles { get; set; }
 
         public override async Task<ExecutionResult> RunAsync(IStepExecutionContext context)
         {
@@ -19,7 +20,7 @@ namespace IR.Core.Step
 
             await Task.Run(() =>
             {
-                Console.WriteLine($"{nameof(Authorize)} - OK.");
+                Console.WriteLine($"{nameof(RunWatchers)} - OK.");
             });
 
             return ExecutionResult.Next();

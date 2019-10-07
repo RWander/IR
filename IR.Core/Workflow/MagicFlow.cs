@@ -19,6 +19,8 @@ namespace IR.Core.Workflow
                     .Output(data => data.Portfolio, step => step.Portfolio)
                 .Then<Step.Market.GetStocks>()
                     .Output(data => data.Stocks, step => step.Stocks)
+                .Then<Step.RunWatchers>()
+                    .Output(data => data.Candles, step => step.Candles)
 #if DEBUG
                 .Then<Step.Sandbox.Clear>()
 #endif

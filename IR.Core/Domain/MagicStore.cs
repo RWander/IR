@@ -7,5 +7,6 @@ namespace IR.Core.Domain
         public Portfolio Portfolio { get; set; }
         public IList<Stock> Stocks { get; set; }
         public Operations Operations { get; set; }
+        public IList<Candle> Candles { get; set; }
     }
 }
