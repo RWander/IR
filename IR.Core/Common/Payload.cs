@@ -1,13 +1,10 @@
 using System.Text.Json;
 
-namespace IR.Core.Step
+namespace IR.Core.Common
 {
-    internal abstract class Payload
+    public abstract class Payload
     {
-        public override string ToString()
-        {
-            return this.Serialize();
-        }
+        public override string ToString() => this.Serialize();
     }
 
     internal static class _ext

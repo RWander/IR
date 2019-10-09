@@ -25,9 +25,8 @@ namespace IR.Core.Workflow
                         }
                     )
 #endif
-                .Then<Authorize>()
                 .Then<GetPortfolio>()
-                    .Output(d => d.Portfolio, s => s.Portfolio)
+                    .Output(d => d.Portfolio, s => s.ResponsePayload)
 #if DEBUG
                 .Then<CreateLimitOrder>()
                     .Input(
@@ -44,7 +43,7 @@ namespace IR.Core.Workflow
                         }
                     )
                 .Then<GetPortfolio>()
-                    .Output(d => d.Portfolio, s => s.Portfolio)
+                    .Output(d => d.Portfolio, s => s.ResponsePayload)
 #endif
                 //.Then<Market.GetStocks>()
                 //    .Output(d => d.Stocks, s => s.Stocks)

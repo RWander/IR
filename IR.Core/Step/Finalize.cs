@@ -18,7 +18,7 @@ namespace IR.Core.Step
         {
             // TODO
             // ..
-
+            Console.WriteLine("Good buy!");
             await Task.Run(() =>
             {
                 Console.WriteLine($"{nameof(Finalize)} - OK.");

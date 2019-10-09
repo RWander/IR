@@ -1,6 +1,8 @@
 using System;
 using System.Text.Json.Serialization;
 
+using IR.Core.Common;
+
 namespace IR.Core.Step
 {
     internal sealed class ResponseObject<TPayload>

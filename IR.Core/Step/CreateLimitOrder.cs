@@ -13,7 +13,7 @@ namespace IR.Core.Step
         public string Figi { get; set; }
         #endregion
 
-        #region [Request, Response]
+        #region [Request]
         public sealed class RequestBody
         {
             public ushort Lots { get; set; }
@@ -22,7 +22,9 @@ namespace IR.Core.Step
             
             public uint Price { get; set; }
         }
+        #endregion
 
+        #region [Response]
         public sealed class ResponsePayload: Payload
         {
             public string OrderId { get; set; }
@@ -48,8 +50,6 @@ namespace IR.Core.Step
         protected override EApiMethodType MethodType => EApiMethodType.POST;
 
         protected override bool EmptyResponsePayload { get; } = false;
-
-        public LimitOrder LimitOrder { get; set; }
 
         public CreateLimitOrder(ApiProxy proxy) : base(proxy) { }
     }

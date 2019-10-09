@@ -18,7 +18,6 @@ namespace IR.Core.Common
 
             // TODO: refactoring: reflection on the 'Step' folder.
             services.AddTransient<Step.Initialize>();
-            services.AddTransient<Step.Authorize>();
             services.AddTransient<Step.GetPortfolio>();
             services.AddTransient<Step.GetOperations>();
             services.AddTransient<Step.CreateLimitOrder>();

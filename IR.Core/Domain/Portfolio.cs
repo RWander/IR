@@ -1,19 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using IR.Core.Common;
 
 namespace IR.Core.Domain
 {
-    public sealed class Portfolio
+    public sealed class Portfolio: Payload
     {
-        public IList<PortfolioPosition> Positions;
-
-        public Portfolio()
-        {
-            Positions = new List<PortfolioPosition>();
-        }
+        public PortfolioPosition[] Positions { get; set; }
     }
 
-    // TODO: incomplete
-    public sealed class PortfolioPosition
+    public sealed class PortfolioPosition: Payload
     {
         public string Figi { get; set; }
         public string Ticker { get; set; }
@@ -21,5 +15,11 @@ namespace IR.Core.Domain
         public string InstrumentType { get; set; } // TODO: enum
         public double Balance { get; set; }
         public double Blocked { get; set; }
+        public ExpectedYield ExpectedYield { get; set; }
+        public uint Lots { get; set; }
+    }
+
+    public sealed class ExpectedYield : Payload
+    {
     }
 }

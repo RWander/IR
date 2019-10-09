@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using System.Text.Json;
 
 using WorkflowCore.Interface;
 using WorkflowCore.Models;
@@ -15,6 +14,7 @@ namespace IR.Core.Step
         where TResPayload: Payload
     {
         public TReqBody RequestBodyObj { get; set; }
+        public TResPayload ResponsePayload { get; set; }
         protected abstract string Method { get; }
         protected abstract EApiMethodType MethodType { get; }
 
@@ -48,7 +48,7 @@ namespace IR.Core.Step
             }
             catch (Exception e)
             {
-                var method = string.Empty;
+                string method;
                 switch (MethodType)
                 {
                     case EApiMethodType.GET:
@@ -77,6 +77,8 @@ namespace IR.Core.Step
             {
                 throw new WorkflowAbortException(resObj.ToString());
             }
+
+            ResponsePayload = resObj.Payload;
 
             return ExecutionResult.Next();
         }
