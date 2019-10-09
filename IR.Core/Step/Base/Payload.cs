@@ -6,16 +6,40 @@ namespace IR.Core.Step
     {
         public override string ToString()
         {
-            return _ext.ToString(this);
+            return this.Serialize();
         }
     }
 
     internal static class _ext
     {
-        public static string ToString<T>(this T payload)
-            where T : Payload
+        private static readonly JsonSerializerOptions SerializeOptions = new JsonSerializerOptions
         {
-            return JsonSerializer.Serialize(payload);
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+
+        private static readonly JsonSerializerOptions DeserializeOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = CustomPolicy.Instance
+        };
+
+        public static string Serialize(this object payload)
+            => JsonSerializer.Serialize(payload, SerializeOptions);
+
+        public static TPayload Deserialize<TPayload>(this string json)
+            => JsonSerializer.Deserialize<TPayload>(json, DeserializeOptions);
+
+        #region [Nested classes]
+        private sealed class CustomPolicy : JsonNamingPolicy
+        {
+            public static readonly CustomPolicy Instance = new CustomPolicy();
+
+            private CustomPolicy() { }
+
+            public override string ConvertName(string name)
+            {
+                return name[..1].ToLower() + name[1..];
+            }
         }
+        #endregion
     }
 }

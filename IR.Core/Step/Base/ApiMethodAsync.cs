@@ -31,7 +31,7 @@ namespace IR.Core.Step
                         resObj = await GetAsync<TResPayload>(Method);
                         break;
                     case EApiMethodType.POST:
-                        var reqBody = JsonSerializer.Serialize(RequestBodyObj);
+                        var reqBody = RequestBodyObj.Serialize();
                         resObj = await PostAsync<TResPayload>(Method, reqBody);
                         break;
                     case EApiMethodType.PUT:

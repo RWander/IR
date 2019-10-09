@@ -1,7 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-using IR.Core.Common;
+﻿using IR.Core.Common;
 using IR.Core.Domain;
 
 namespace IR.Core.Step
@@ -19,24 +16,21 @@ namespace IR.Core.Step
         #region [Request, Response]
         public sealed class RequestBody
         {
-            [JsonPropertyName("lots")]
             public ushort Lots { get; set; }
 
-            [JsonPropertyName("operation")]
             public string Operation { get; set; }
             
-            [JsonPropertyName("price")]
             public uint Price { get; set; }
         }
 
         public sealed class ResponsePayload: Payload
         {
-            public string orderId { get; set; }
-            public string operation { get; set; }
-            public string status { get; set; }
+            public string OrderId { get; set; }
+            public string Operation { get; set; }
+            public string Status { get; set; }
             public string RejectReason { get; set; }
             public uint RequestedLots { get; set; }
-            public uint executedLots { get; set; }
+            public uint ExecutedLots { get; set; }
             public _Commission Commission { get; set; }
 
             #region [Nested classes]
@@ -46,11 +40,6 @@ namespace IR.Core.Step
                 public float Value { get; set; }
             }
             #endregion
-
-            //public override string ToString()
-            //{
-            //    return JsonSerializer.Serialize(this);
-            //}
         }
         #endregion
 

@@ -10,10 +10,8 @@ namespace IR.Core.Step.Sandbox
         #region [Request, Response]
         public sealed class RequestBody
         {
-            [JsonPropertyName("currency")]
             public string Currency { get; set; }
 
-            [JsonPropertyName("balance")]
             public int Balance { get; set; }
         }
         #endregion
