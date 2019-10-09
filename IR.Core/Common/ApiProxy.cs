@@ -33,8 +33,10 @@ namespace IR.Core.Common
         /// <summary>
         /// GET
         /// </summary>
-        public async Task<ResponseObject<TResPayload>> GetAsync<TResPayload>(string path)
-            where TResPayload : class, new()
+        public async Task<ResponseObject<TResPayload>> GetAsync<TResPayload>(
+            string path,
+            bool readPayload
+        ) where TResPayload : Payload
         {
             // TODO: logging
             ResponseObject<TResPayload> data;
@@ -42,7 +44,7 @@ namespace IR.Core.Common
             if (res.IsSuccessStatusCode)
             {
                 var resJson = await res.Content.ReadAsStringAsync();
-                data = ResponseObject<TResPayload>.Build<TResPayload>(resJson);
+                data = ResponseObject<TResPayload>.Build<TResPayload>(resJson, readPayload);
             }
             else
             {
@@ -52,8 +54,11 @@ namespace IR.Core.Common
             return data;
         }
 
-        public async Task<ResponseObject<TResPayload>> POSTAsync<TResPayload>(string path, string json)
-            where TResPayload : class, new()
+        public async Task<ResponseObject<TResPayload>> PostAsync<TResPayload>(
+            string path,
+            string json,
+            bool readPayload
+        ) where TResPayload : Payload
         {
             // TODO: logging
             ResponseObject<TResPayload> data;
@@ -62,7 +67,7 @@ namespace IR.Core.Common
             if (res.IsSuccessStatusCode)
             {
                 var resJson = await res.Content.ReadAsStringAsync();
-                data = ResponseObject<TResPayload>.Build<TResPayload>(resJson);
+                data = ResponseObject<TResPayload>.Build<TResPayload>(resJson, readPayload);
             }
             else
             {

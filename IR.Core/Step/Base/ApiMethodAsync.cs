@@ -12,7 +12,7 @@ namespace IR.Core.Step
 {
     internal abstract class ApiMethodAsync<TReqBody, TResPayload> : ApiStepAsync
         where TReqBody: class, new()
-        where TResPayload: class, new()
+        where TResPayload: Payload
     {
         public TReqBody RequestBodyObj { get; set; }
         protected abstract string Method { get; }
@@ -28,11 +28,11 @@ namespace IR.Core.Step
                 switch (MethodType)
                 {
                     case EApiMethodType.GET:
-                        resObj = await GETAsync<TResPayload>(Method);
+                        resObj = await GetAsync<TResPayload>(Method);
                         break;
                     case EApiMethodType.POST:
                         var reqBody = JsonSerializer.Serialize(RequestBodyObj);
-                        resObj = await POSTAsync<TResPayload>(Method, reqBody);
+                        resObj = await PostAsync<TResPayload>(Method, reqBody);
                         break;
                     case EApiMethodType.PUT:
                         // TODO: implement
@@ -52,10 +52,10 @@ namespace IR.Core.Step
                 switch (MethodType)
                 {
                     case EApiMethodType.GET:
-                        method = nameof(GETAsync);
+                        method = nameof(GetAsync);
                         break;
                     case EApiMethodType.POST:
-                        method = nameof(GETAsync);
+                        method = nameof(GetAsync);
                         break;
                     case EApiMethodType.PUT:
                         // TODO: implement

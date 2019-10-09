@@ -10,6 +10,8 @@ namespace IR.Core.Step
 {
     internal sealed class Authorize : ApiStepAsync
     {
+        protected override bool EmptyResponsePayload { get; } = false;
+
         public Authorize(ApiProxy proxy) : base(proxy) { }
 
         public override async Task<ExecutionResult> RunAsync(IStepExecutionContext context)

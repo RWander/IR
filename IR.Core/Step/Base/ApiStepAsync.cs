@@ -11,27 +11,32 @@ namespace IR.Core.Step
     {
         private readonly ApiProxy _proxy; // NB: <-- singleton
 
+        protected abstract bool EmptyResponsePayload { get; }
+
         protected ApiStepAsync(ApiProxy proxy)
         {
             _proxy = proxy;
         }
 
-        protected async Task<ResponseObject<TResPayload>> GETAsync<TResPayload>(string path)
-            where TResPayload: class, new()
+        protected async Task<ResponseObject<TResPayload>> GetAsync<TResPayload>(
+            string path
+        ) where TResPayload: Payload
         {
             // TODO: logging
-            var resObj = await _proxy.GetAsync<TResPayload>(path);
+            var resObj = await _proxy.GetAsync<TResPayload>(path, EmptyResponsePayload == false);
             Console.WriteLine($"path={path}");
             Console.WriteLine($"response={resObj}");
 
             return resObj;
         }
 
-        protected async Task<ResponseObject<TResPayload>> POSTAsync<TResPayload>(string path, string json)
-            where TResPayload : class, new()
+        protected async Task<ResponseObject<TResPayload>> PostAsync<TResPayload>(
+            string path,
+            string json
+        ) where TResPayload : Payload
         {
             // TODO: logging
-            var resObj = await _proxy.POSTAsync<TResPayload>(path, json);
+            var resObj = await _proxy.PostAsync<TResPayload>(path, json, EmptyResponsePayload == false);
             Console.WriteLine($"path={path}");
             Console.WriteLine($"response={resObj}");
 
