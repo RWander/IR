@@ -45,8 +45,8 @@ namespace IR.Core.Workflow
                 .Then<GetPortfolio>()
                     .Output(d => d.Portfolio, s => s.ResponsePayload)
 #endif
-                //.Then<Market.GetStocks>()
-                //    .Output(d => d.Stocks, s => s.Stocks)
+                .Then<Market.GetStocks>()
+                    .Output(d => d.MarketInstrumentList, s => s.ResponsePayload)
                 .Then<RunWatchers>()
                     .Output(d => d.Candles, s => s.Candles)
 #if DEBUG
