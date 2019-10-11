@@ -8,11 +8,11 @@ using IR.Core.Common;
 
 namespace IR.Core.Step
 {
-    internal sealed class Finalize : ApiStepAsync
+    internal sealed class Finalize : RestStepAsync
     {
         protected override bool EmptyResponsePayload { get; } = true;
 
-        public Finalize(ApiProxy proxy) : base(proxy) { }
+        public Finalize(RestProxy proxy) : base(proxy) { }
 
         public override async Task<ExecutionResult> RunAsync(IStepExecutionContext context)
         {

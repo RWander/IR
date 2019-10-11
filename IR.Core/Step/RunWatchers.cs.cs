@@ -6,12 +6,16 @@ using WorkflowCore.Models;
 using WorkflowCore.Interface;
 
 using IR.Core.Domain;
+using IR.Core.Common;
 
 namespace IR.Core.Step
 {
-    internal sealed class RunWatchers : StepBodyAsync
+    internal sealed class RunWatchers : WsStepAsync
     {
         public IList<Candle> Candles { get; set; }
+
+        public RunWatchers(WsProxy proxy) : base(proxy)
+        { }
 
         public override async Task<ExecutionResult> RunAsync(IStepExecutionContext context)
         {

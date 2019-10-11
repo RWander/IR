@@ -1,27 +1,27 @@
-using IR.Core.Step;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text.Json;
 using System.Threading.Tasks;
+
+using IR.Core.Step;
 
 namespace IR.Core.Common
 {
-    internal sealed class ApiProxy: IDisposable
+    internal sealed class RestProxy: IDisposable
     {
         private HttpClient _client;
 
-        public ApiProxy(IConfigurationFactory configFactory) 
+        public RestProxy(IConfigurationFactory configFactory) 
         {
             var config = configFactory.Configuration;
 
-            var baseUrl = config["baseUrl"];
+            var restUrl = config["restUrl"];
             var token = config["token"];
 
             // HttpClint documentation is here https://docs.microsoft.com/en-us/aspnet/web-api/overview/advanced/calling-a-web-api-from-a-net-client
             _client = new HttpClient
             {
-                BaseAddress = new Uri(baseUrl)
+                BaseAddress = new Uri(restUrl)
             };
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(
@@ -40,7 +40,7 @@ namespace IR.Core.Common
         {
             // TODO: logging
             ResponseObject<TResPayload> data;
-            var res = await _client.GetAsync(path);
+            var res = await _client.GetAsync(path).ConfigureAwait(false);
             if (res.IsSuccessStatusCode)
             {
                 var resJson = await res.Content.ReadAsStringAsync();
@@ -63,7 +63,7 @@ namespace IR.Core.Common
             // TODO: logging
             ResponseObject<TResPayload> data;
             var content = new StringContent(json);
-            var res = await _client.PostAsync(path, content);
+            var res = await _client.PostAsync(path, content).ConfigureAwait(false);
             if (res.IsSuccessStatusCode)
             {
                 var resJson = await res.Content.ReadAsStringAsync();

@@ -1,6 +1,6 @@
 ﻿namespace IR.Core.Step
 {
-    internal enum EApiMethodType
+    internal enum ERestMethodType
     {
         GET,
         POST,

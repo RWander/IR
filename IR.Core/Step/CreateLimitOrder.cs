@@ -7,7 +7,7 @@ namespace IR.Core.Step
     /// Description: https://tinkoffcreditsystems.github.io/invest-openapi/swagger-ui/#/orders/post_orders_limit_order
     /// </summary>
     internal sealed class CreateLimitOrder:
-        ApiMethodAsync<CreateLimitOrder.RequestBody, CreateLimitOrder.ResponsePayload>
+        RestMethodAsync<CreateLimitOrder.RequestBody, CreateLimitOrder.ResponsePayload>
     {
         #region [Request params]
         public string Figi { get; set; }
@@ -47,10 +47,10 @@ namespace IR.Core.Step
 
         protected override string Method => $"orders/limit-order?figi={Figi}";
 
-        protected override EApiMethodType MethodType => EApiMethodType.POST;
+        protected override ERestMethodType MethodType => ERestMethodType.POST;
 
         protected override bool EmptyResponsePayload { get; } = false;
 
-        public CreateLimitOrder(ApiProxy proxy) : base(proxy) { }
+        public CreateLimitOrder(RestProxy proxy) : base(proxy) { }
     }
 }

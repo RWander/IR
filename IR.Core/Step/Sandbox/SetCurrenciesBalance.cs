@@ -3,7 +3,7 @@
 namespace IR.Core.Step.Sandbox
 {
     internal sealed class SetCurrenciesBalance:
-        ApiMethodAsync<SetCurrenciesBalance.RequestBody, Payload>
+        RestMethodAsync<SetCurrenciesBalance.RequestBody, Payload>
     {
         #region [Request, Response]
         public sealed class RequestBody
@@ -16,10 +16,10 @@ namespace IR.Core.Step.Sandbox
 
         protected override string Method => "sandbox/currencies/balance";
 
-        protected override EApiMethodType MethodType => EApiMethodType.POST;
+        protected override ERestMethodType MethodType => ERestMethodType.POST;
 
         protected override bool EmptyResponsePayload { get; } = true;
 
-        public SetCurrenciesBalance(ApiProxy proxy) : base(proxy) { }
+        public SetCurrenciesBalance(RestProxy proxy) : base(proxy) { }
     }
 }

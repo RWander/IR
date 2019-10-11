@@ -24,10 +24,6 @@ namespace IR.Core.Workflow
                             Balance = 100000
                         }
                     )
-#endif
-                .Then<GetPortfolio>()
-                    .Output(d => d.Portfolio, s => s.ResponsePayload)
-#if DEBUG
                 .Then<CreateLimitOrder>()
                     .Input(
                         s => s.Figi,
@@ -42,11 +38,11 @@ namespace IR.Core.Workflow
                             Price = 2300
                         }
                     )
-                .Then<GetPortfolio>()
-                    .Output(d => d.Portfolio, s => s.ResponsePayload)
 #endif
                 .Then<Market.GetStocks>()
                     .Output(d => d.MarketInstrumentList, s => s.ResponsePayload)
+                .Then<GetPortfolio>()
+                    .Output(d => d.Portfolio, s => s.ResponsePayload)
                 .Then<RunWatchers>()
                     .Output(d => d.Candles, s => s.Candles)
 #if DEBUG

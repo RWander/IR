@@ -6,7 +6,7 @@ namespace IR.Core.Step
     /// <summary>
     /// Description: https://tinkoffcreditsystems.github.io/invest-openapi/swagger-ui/#/portfolio
     /// </summary>
-    internal sealed class GetPortfolio : ApiMethodAsync<object, Portfolio>
+    internal sealed class GetPortfolio : RestMethodAsync<object, Portfolio>
     {
         #region [Request]
         // no params
@@ -18,10 +18,10 @@ namespace IR.Core.Step
 
         protected override string Method => "portfolio";
 
-        protected override EApiMethodType MethodType => EApiMethodType.GET;
+        protected override ERestMethodType MethodType => ERestMethodType.GET;
 
         protected override bool EmptyResponsePayload { get; } = false;
 
-        public GetPortfolio(ApiProxy proxy) : base(proxy) { }
+        public GetPortfolio(RestProxy proxy) : base(proxy) { }
     }
 }

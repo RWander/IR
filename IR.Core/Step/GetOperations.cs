@@ -2,14 +2,14 @@
 
 namespace IR.Core.Step
 {
-    internal sealed class GetOperations : ApiMethodAsync<object, Payload>
+    internal sealed class GetOperations : RestMethodAsync<object, Payload>
     {
         protected override string Method => "operations";
 
-        protected override EApiMethodType MethodType => EApiMethodType.GET;
+        protected override ERestMethodType MethodType => ERestMethodType.GET;
 
         protected override bool EmptyResponsePayload { get; } = true; // TODO: false
 
-        public GetOperations(ApiProxy proxy) : base(proxy) { }
+        public GetOperations(RestProxy proxy) : base(proxy) { }
     }
 }

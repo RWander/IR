@@ -9,16 +9,16 @@ using IR.Core.Common;
 
 namespace IR.Core.Step
 {
-    internal abstract class ApiMethodAsync<TReqBody, TResPayload> : ApiStepAsync
+    internal abstract class RestMethodAsync<TReqBody, TResPayload> : RestStepAsync
         where TReqBody: class, new()
         where TResPayload: Payload
     {
         public TReqBody RequestBodyObj { get; set; }
         public TResPayload ResponsePayload { get; set; }
         protected abstract string Method { get; }
-        protected abstract EApiMethodType MethodType { get; }
+        protected abstract ERestMethodType MethodType { get; }
 
-        protected ApiMethodAsync(ApiProxy proxy) : base(proxy) { }
+        protected RestMethodAsync(RestProxy proxy) : base(proxy) { }
 
         public sealed override async Task<ExecutionResult> RunAsync(IStepExecutionContext context)
         {
@@ -27,18 +27,18 @@ namespace IR.Core.Step
             {
                 switch (MethodType)
                 {
-                    case EApiMethodType.GET:
+                    case ERestMethodType.GET:
                         resObj = await GetAsync<TResPayload>(Method);
                         break;
-                    case EApiMethodType.POST:
+                    case ERestMethodType.POST:
                         var reqBody = RequestBodyObj.Serialize();
                         resObj = await PostAsync<TResPayload>(Method, reqBody);
                         break;
-                    case EApiMethodType.PUT:
+                    case ERestMethodType.PUT:
                         // TODO: implement
                         // ..
                         throw new NotImplementedException("TODO");
-                    case EApiMethodType.DELETE:
+                    case ERestMethodType.DELETE:
                         // TODO: implement
                         // ..
                         throw new NotImplementedException("TODO");
@@ -51,17 +51,17 @@ namespace IR.Core.Step
                 string method;
                 switch (MethodType)
                 {
-                    case EApiMethodType.GET:
+                    case ERestMethodType.GET:
                         method = nameof(GetAsync);
                         break;
-                    case EApiMethodType.POST:
+                    case ERestMethodType.POST:
                         method = nameof(GetAsync);
                         break;
-                    case EApiMethodType.PUT:
+                    case ERestMethodType.PUT:
                         // TODO: implement
                         // ..
                         throw new NotImplementedException("TODO");
-                    case EApiMethodType.DELETE:
+                    case ERestMethodType.DELETE:
                         // TODO: implement
                         // ..
                         throw new NotImplementedException("TODO");

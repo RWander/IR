@@ -14,7 +14,10 @@ namespace IR.Core.Common
             services.AddLogging(); // TODO: add logging (?)
             services.AddWorkflow();
             services.AddSingleton<IConfigurationFactory, ConfigurationFactory>();
-            services.AddSingleton<ApiProxy>(); // TODO: Transient or Singleton
+            services.AddSingleton<RestProxy>(); // TODO: Transient or Singleton
+            services.AddSingleton<WsProxy>(
+                sp => WsProxy.Create(sp.GetService<IConfigurationFactory>())
+            ); // TODO: Transient or Singleton
 
             // TODO: refactoring: reflection on the 'Step' folder.
             services.AddTransient<Step.Initialize>();

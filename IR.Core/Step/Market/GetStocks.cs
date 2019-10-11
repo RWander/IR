@@ -6,7 +6,7 @@ namespace IR.Core.Step.Market
     /// <summary>
     /// Description: https://tinkoffcreditsystems.github.io/invest-openapi/swagger-ui/#/market/get_market_stocks
     /// </summary>
-    internal sealed class GetStocks : ApiMethodAsync<object, MarketInstrumentList>
+    internal sealed class GetStocks : RestMethodAsync<object, MarketInstrumentList>
     {
         #region [Request]
         // no params
@@ -18,10 +18,10 @@ namespace IR.Core.Step.Market
 
         protected override string Method => "market/stocks";
 
-        protected override EApiMethodType MethodType => EApiMethodType.GET;
+        protected override ERestMethodType MethodType => ERestMethodType.GET;
 
         protected override bool EmptyResponsePayload { get; } = false;
 
-        public GetStocks(ApiProxy proxy) : base(proxy) { }
+        public GetStocks(RestProxy proxy) : base(proxy) { }
     }
 }

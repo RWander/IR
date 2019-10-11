@@ -7,13 +7,13 @@ using IR.Core.Common;
 
 namespace IR.Core.Step
 {
-    internal abstract class ApiStepAsync : StepBodyAsync
+    internal abstract class RestStepAsync : StepBodyAsync
     {
-        private readonly ApiProxy _proxy; // NB: <-- singleton
+        private readonly RestProxy _proxy; // NB: <-- singleton
 
         protected abstract bool EmptyResponsePayload { get; }
 
-        protected ApiStepAsync(ApiProxy proxy)
+        protected RestStepAsync(RestProxy proxy)
         {
             _proxy = proxy;
         }

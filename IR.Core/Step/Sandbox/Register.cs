@@ -2,14 +2,14 @@
 
 namespace IR.Core.Step.Sandbox
 {
-    internal sealed class Register: ApiMethodAsync<object, Payload>
+    internal sealed class Register: RestMethodAsync<object, Payload>
     {
         protected override string Method => "sandbox/register";
 
-        protected override EApiMethodType MethodType => EApiMethodType.POST;
+        protected override ERestMethodType MethodType => ERestMethodType.POST;
 
         protected override bool EmptyResponsePayload { get; } = true;
 
-        public Register(ApiProxy proxy) : base(proxy) { }
+        public Register(RestProxy proxy) : base(proxy) { }
     }
 }
