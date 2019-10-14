@@ -7,9 +7,11 @@ using WorkflowCore.Interface;
 
 using IR.Core.Domain;
 using IR.Core.Common;
+using IR.Core.Streaming;
 
 namespace IR.Core.Step
 {
+
     internal sealed class RunWatchers : WsStepAsync
     {
         public IList<Candle> Candles { get; set; }
@@ -19,13 +21,13 @@ namespace IR.Core.Step
 
         public override async Task<ExecutionResult> RunAsync(IStepExecutionContext context)
         {
-            // TODO
-            // ..
+            var req = StreamingRequest.SubscribeCandle(
+                "BBG006L8G4H1" /* YNDX */,
+                CandleInterval.Minute()
+            );
+            await Proxy.SendStreamingRequestAsync(req);
 
-            await Task.Run(() =>
-            {
-                Console.WriteLine($"{nameof(RunWatchers)} - OK.");
-            });
+            Console.WriteLine($"{nameof(RunWatchers)} - OK.");
 
             return ExecutionResult.Next();
         }
