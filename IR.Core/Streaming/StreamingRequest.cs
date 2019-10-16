@@ -39,17 +39,17 @@ namespace IR.Core.Streaming
         //    return new InstrumentInfoUnsubscribeRequest(figi);
         //}
 
-        public class CandleRequest : StreamingRequest
+        public sealed class CandleRequest : StreamingRequest
         {
             public string Figi { get; }
 
-            public CandleInterval Interval { get; }
+            public string Interval { get; }
 
             private CandleRequest(bool subscribe, string figi, CandleInterval interval)
                 : base(subscribe, "candle")
             {
                 Figi = figi;
-                Interval = interval;
+                Interval = interval.Value;
             }
 
             internal static CandleRequest Subscribe(string figi, CandleInterval interval)

@@ -8,7 +8,7 @@ namespace IR.Core.Domain
     /// <summary>
     /// Copied (and modified) from https://github.com/TinkoffCreditSystems/invest-openapi-csharp-sdk/blob/master/src/Tinkoff.Trading.OpenApi/Models/CandlePayload.cs
     /// </summary>
-    public class Candle: Payload
+    public sealed class Candle: Payload
     {
         public decimal Open { get; }
         public decimal Close { get; }
